@@ -9,29 +9,52 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        ListNode *curr =head;
-        ListNode *s=head;
-        ListNode *f=head;
-        bool value=false;
+        // ListNode *curr =head;
+        // ListNode *s=head;
+        // ListNode *f=head;
+        // bool value=false;
+        // while(f!=NULL && f->next!=NULL){
+        //     s=s->next;
+        //     f=f->next->next;
+        //     if(s==f){
+        //         value=true;
+        //         break;
+        //     }
+        // }
+        // if(value){
+        //     while(true){
+        //         if(curr==s){
+        //             return curr;
+        //         }
+        //         curr=curr->next;
+        //         s=s->next;
+                
+                
+        //     }
+        // }
+        // return nullptr;
+
+
+
+
+        ListNode* s=head;
+        ListNode* f=head;
         while(f!=NULL && f->next!=NULL){
             s=s->next;
             f=f->next->next;
             if(s==f){
-                value=true;
-                break;
-            }
-        }
-        if(value){
-            while(true){
-                if(curr==s){
-                    return curr;
+                s=head;
+                while(s!=f){
+                    s=s->next;
+                    f=f->next;
                 }
-                curr=curr->next;
-                s=s->next;
-                
-                
+                return s;
             }
         }
         return nullptr;
+
+
+
+
     }
 };
