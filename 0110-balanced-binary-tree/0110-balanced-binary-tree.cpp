@@ -11,24 +11,20 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
-        if(!root){
-            return 0;
-        }
-        int l=height(root->left);
-        int r=height(root->right);
-        return 1+max(l,r);
+// in this question use postorder otherwise subtree.
+    int checkBalanced(TreeNode* root){
+        if(!root) return 0;
+        int lh = checkBalanced(root->left);
+        if(lh==-1) return -1;
+        int rh = checkBalanced(root->right);
+        if(rh==-1) return -1;
+
+        if(abs(lh-rh)>1) return -1;
+
+        return 1+max(lh,rh);
+
     }
     bool isBalanced(TreeNode* root) {
-        if(!root){
-            return true;
-        }
-
-        int l=height(root->left);
-        int r=height(root->right);
-        if(abs(l-r)>1){
-            return false;
-        }
-        return isBalanced(root->left) && isBalanced(root->right);
+        return checkBalanced(root) != -1;
     }
 };
