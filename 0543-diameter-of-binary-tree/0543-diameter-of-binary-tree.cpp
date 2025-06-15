@@ -11,21 +11,16 @@
  */
 class Solution {
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
+    int height(TreeNode* root,int &dia){
         if(!root) return 0;
-        stack<TreeNode*>  st;
-        st.push(root);
-        int ans=1;
-        while(!st.empty()){
-            int size=st.size();
-            ans=max(ans,size);
-            for(int i=0;i<size;i++){
-                TreeNode* node=st.top();
-                st.pop();
-                st.push(node->right);
-                st.push(node->left);
-            }
-        }
-        return ans;
+        int lh =height(root->left,dia);
+        int rh=height(root->right,dia);
+        dia= max(dia,lh+rh);
+        return 1+max(lh,rh);
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+       int dia=0;
+       height(root,dia);
+       return dia;
     }
 };
