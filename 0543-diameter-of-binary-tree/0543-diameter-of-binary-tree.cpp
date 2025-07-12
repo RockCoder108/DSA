@@ -11,20 +11,29 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
-        if(!root) return 0;
-        return 1+max(height(root->left),height(root->right));
-    }
-    int diameterOfBinaryTree(TreeNode* root) {
-        if(!root) return 0;
-
-        int left = height(root->left);
-        int right = height(root->right);
-        //int ans=0;
-
-        int leftnode =diameterOfBinaryTree(root->left);
-        int rightnode=diameterOfBinaryTree(root->right);
-
-        return max(left+right,max(leftnode,rightnode));
-    }
+    // int ans=0;
+    // int height(TreeNode* root){
+    //     if(!root) return 0;
+    //     int leftheight = height(root->left);
+    //     int rightheight = height(root->right);
+    //     ans=max(ans,leftheight+rightheight);
+    //     return 1+max(leftheight,rightheight);
+    // }
+    // int diameterOfBinaryTree(TreeNode* root) {
+    //     height(root);
+    //     return ans;
+    // }
+        int solve(TreeNode* root,int &ans){
+            if(root== NULL) return 0;
+            int lh = solve(root->left,ans);
+            int rh = solve(root->right,ans);
+            ans = max(ans, lh+rh);
+            return 1+max(lh,rh);
+        }
+        int diameterOfBinaryTree(TreeNode* root){
+            if (root== NULL) return 0;
+            int ans =0;
+            solve(root,ans);
+            return ans;
+        }
 };
