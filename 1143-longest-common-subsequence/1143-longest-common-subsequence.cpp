@@ -5,7 +5,7 @@ public:
         int a = -1e9;
         int b = -1e9;
         int c = -1e9;
-        //if(dp[i][j]!=-1) return dp[i][j];
+        if(dp[i][j]!=-1) return dp[i][j];
         if(s1[i]==s2[j]){
             a = 1+solve(i+1,j+1,n,m,s1,s2,dp);
         }else{
