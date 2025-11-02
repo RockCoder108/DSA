@@ -1,40 +1,55 @@
 class Solution {
 public:
-    int countUnguarded(int m, int n, vector<vector<int>>& guards,
-                       vector<vector<int>>& walls) {
-        vector<vector<int>> grid(m, vector<int>(n, 0)); // 0 = empty
+    int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls) {
+        
+        vector<vector<int>> grid(m, vector<int>(n,0));
 
-        // Mark guards as 2 and walls as 3
-        for (auto& g : guards)
-            grid[g[0]][g[1]] = 2;
-        for (auto& w : walls)
-            grid[w[0]][w[1]] = 3;
-
-        // Directions: up, down, left, right
-        vector<pair<int, int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-        // For each guard
-        for (auto& g : guards) {
-            int x = g[0], y = g[1];
-            for (auto [dx, dy] : dirs) {
-                int i = x + dx, j = y + dy;
-                while (i >= 0 && i < m && j >= 0 && j < n && grid[i][j] != 3 &&
-                       grid[i][j] != 2) {
-                    // mark as guarded if empty
-                    if (grid[i][j] == 0)
-                        grid[i][j] = 1;
-                    i += dx;
-                    j += dy;
-                }
-            }
+        for(auto i: walls){
+            grid[i[0]][i[1]] = 1; 
+        }
+        for(auto i: guards){
+            grid[i[0]][i[1]] = 1;
         }
 
-        // Count unguarded empty cells
-        int count = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 0)
+        for(auto i : guards){
+            int x;
+            int y;
+            // left
+            x=i[0];
+            y=i[1]-1;
+            while(y >= 0 && grid[x][y]!=1){
+                grid[x][y] = 2;
+                y--;
+            }
+            //right
+            x=i[0];
+            y=i[1]+1;
+            while(y < n && grid[x][y]!=1){
+                grid[x][y] = 2;
+                y++;
+            }
+
+            //top
+            x=i[0]-1;
+            y=i[1];
+            while(x >= 0 && grid[x][y]!=1){
+                grid[x][y] = 2;
+                x--;
+            }
+            //down
+            x=i[0]+1;
+            y=i[1];
+            while(x <m && grid[x][y]!=1){
+                grid[x][y] = 2;
+                x++;
+            }
+        }
+        int count =0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!grid[i][j]){
                     count++;
+                }
             }
         }
         return count;
